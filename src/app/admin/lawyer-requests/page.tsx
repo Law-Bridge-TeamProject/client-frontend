@@ -28,6 +28,8 @@ export default function AdminLawyerRequestsPage() {
     setRequests((prev) => prev.filter((r) => r.userId !== userId));
   };
 
+  console.log("Lawyer requests:", requests);
+
   return (
     <div className="p-4">
       <h1 className="text-xl font-bold mb-4">Өмгөөлөгчийн хүсэлтүүд</h1>
