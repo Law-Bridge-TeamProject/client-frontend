@@ -1,0 +1,13 @@
+query Query {
+  getUser {
+    id
+    age
+    name
+    gender
+    isAdmin
+    projects
+    car {
+      mark
+    }
+  }
+}

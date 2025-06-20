@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { ApolloWrapper } from "@/providers/ApolloWrapper";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
@@ -24,11 +25,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <ApolloWrapper>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {children}
       </body>
+      </ApolloWrapper>
     </html>
   );
 }
