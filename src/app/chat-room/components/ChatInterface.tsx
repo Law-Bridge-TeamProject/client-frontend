@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { LiveKitRoom, VideoConference } from "@livekit/components-react";
-import { VideoCallModal } from './VideoCallModal'; // зөв path-тай эсэхийг шалгаарай
+import { LiveKitRoom } from "@livekit/components-react";
+import {VideoCallModal}  from './VideoCallModal';
 
 import "@livekit/components-styles";
 

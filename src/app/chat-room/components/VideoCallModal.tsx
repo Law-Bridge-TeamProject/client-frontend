@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   X,
   Mic,
@@ -18,7 +18,6 @@ import {
 } from "@livekit/components-react";
 import { Track } from "livekit-client";
 import { User } from "../types/chat";
-import Chat from "./Chat";
 
 interface VideoCallModalProps {
   user: User;
@@ -35,6 +34,57 @@ export const VideoCallModal: React.FC<VideoCallModalProps> = ({
   const [isVideoOff, setIsVideoOff] = useState(callType === "audio");
   const [isScreenSharing, setIsScreenSharing] = useState(false);
   const [isChatOpen, setIsChatOpen] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
+  const [previewPosition, setPreviewPosition] = useState({
+    x: window.innerWidth - 350,
+    y: window.innerHeight - 780,
+  });
+
+  const previewRef = useRef<HTMLDivElement>(null);
+  const videoContainerRef = useRef<HTMLDivElement>(null);
+
+  // clamp function - утга хязгаарлах
+  const clamp = (num: number, min: number, max: number) =>
+    Math.min(Math.max(num, min), max);
+
+  // Хулгана татах үйлдэл дээр хариу үйлдэл
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if (!previewRef.current) return;
+    const rect = previewRef.current.getBoundingClientRect();
+    setDragOffset({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+    setIsDragging(true);
+  };
+
+  // Видео контейнер дотор draggable preview-г хязгаарлах mousemove эвэнт
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!isDragging || !videoContainerRef.current) return;
+
+      const containerRect = videoContainerRef.current.getBoundingClientRect();
+
+      let newX = e.clientX - containerRect.left - dragOffset.x;
+      let newY = e.clientY - containerRect.top - dragOffset.y;
+
+      // Хязгаарлалт хийх (preview элемент: 210x154)
+      newX = clamp(newX, 0, containerRect.width - 210);
+      newY = clamp(newY, 0, containerRect.height - 154);
+
+      setPreviewPosition({ x: newX, y: newY });
+    };
+
+    const handleMouseUp = () => {
+      setIsDragging(false);
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mouseup", handleMouseUp);
+
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("mouseup", handleMouseUp);
+    };
+  }, [isDragging, dragOffset]);
 
   const { localParticipant } = useLocalParticipant();
 
@@ -53,7 +103,7 @@ export const VideoCallModal: React.FC<VideoCallModalProps> = ({
   );
 
   const toggleMute = () => {
-    localParticipant.setMicrophoneEnabled(isMuted);
+    localParticipant.setMicrophoneEnabled(!isMuted);
     setIsMuted(!isMuted);
   };
 
@@ -78,9 +128,12 @@ export const VideoCallModal: React.FC<VideoCallModalProps> = ({
 
   return (
     <div className="fixed inset-0 bg-black/95 flex items-center justify-center z-50 p-2 sm:p-4">
-      <div className="relative bg-gradient-to-br from-blue-600  to-blue-800 rounded-2xl w-full max-w-7xl shadow-2xl overflow-hidden border border-blue-500 flex flex-col md:flex-row transition-all duration-300">
+      <div className="relative bg-gradient-to-br from-blue-600 to-blue-800 rounded-2xl w-full max-w-7xl shadow-2xl overflow-hidden border border-blue-500 flex flex-col md:flex-row transition-all duration-300">
         {/* Main Video/Content Section */}
-        <div className="relative flex-1 bg-blue-800 rounded-t-2xl md:rounded-l-2xl h-[24rem] sm:h-[32rem] md:h-auto flex items-center justify-center">
+        <div
+          ref={videoContainerRef}
+          style={{ minHeight: "400px" }}
+          className="relative flex-1 bg-blue-800 rounded-t-2xl md:rounded-l-2xl h-[24rem] sm:h-[32rem] md:h-auto flex items-center justify-center">
           {isScreenSharing &&
           screenShareTrackRef &&
           screenShareTrackRef.publication ? (
@@ -94,7 +147,7 @@ export const VideoCallModal: React.FC<VideoCallModalProps> = ({
             cameraTrackRef.publication ? (
             <VideoTrack
               trackRef={cameraTrackRef}
-              className="w-full h-full object-cover rounded-t-2xl md:rounded-l-2xl"
+              className="absolute inset-0 rounded-lg w-full h-full object-cover rounded-t-2xl md:rounded-l-2xl"
             />
           ) : (
             <div className="flex flex-col items-center text-center px-4">
@@ -114,16 +167,23 @@ export const VideoCallModal: React.FC<VideoCallModalProps> = ({
             </div>
           )}
 
-          {/* Self Preview */}
+          {/* Self Preview (Draggable) */}
           {callType === "video" &&
             !isVideoOff &&
             cameraTrackRef &&
             cameraTrackRef.publication &&
             !isScreenSharing && (
-              <div className="absolute bottom-4 right-4 w-32 h-24 sm:w-40 sm:h-32 bg-indigo-800 rounded-lg shadow-xl overflow-hidden border-2 border-indigo-500">
+              <div
+                ref={previewRef}
+                className="absolute top-[-100] w-[210px] h-[154px] bg-black rounded-lg border-2 border-white/50 shadow-lg cursor-move z-100 overflow-hidden"
+                style={{
+                  left: previewPosition.x,
+                  top: previewPosition.y,
+                }}
+                onMouseDown={handleMouseDown}>
                 <VideoTrack
                   trackRef={cameraTrackRef}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover rounded-lg pointer-events-none bg-black"
                 />
               </div>
             )}
@@ -131,17 +191,11 @@ export const VideoCallModal: React.FC<VideoCallModalProps> = ({
 
         {/* Chat Section */}
         <div
-          className={`
-    bg-blue-800 border-l border-blue-700 rounded-b-2xl md:rounded-r-2xl
-    p-4
-    transition-all duration-300 ease-in-out
-    flex flex-col
-    ${
-      isChatOpen
-        ? "max-w-[320px] opacity-100 pointer-events-auto"
-        : "max-w-0 opacity-0 pointer-events-none"
-    }
-  `}
+          className={`bg-blue-800 border-l border-blue-700 rounded-b-2xl md:rounded-r-2xl p-4 transition-all duration-300 ease-in-out flex flex-col ${
+            isChatOpen
+              ? "max-w-[320px] opacity-100 pointer-events-auto"
+              : "max-w-0 opacity-0 pointer-events-none"
+          }`}
           style={{ overflow: "hidden" }}>
           {/* Header */}
           <div className="text-indigo-300 font-semibold mb-4 text-lg select-none">

@@ -2,8 +2,8 @@ import ChatInterface from "./components/ChatInterface";
 
 const chatRoomPage = async () => {
   const res = await fetch(
-    `http://localhost:3000/chatRoom/api/livekit-token?userId=user123&room=lawyer-room`
-  );
+    `${process.env.NEXT_PUBLIC_SITE_URL}/chat-room/api/livekit-token?userId=user123&room=lawyer-room      `
+  ); 
 
   if (!res.ok) {
     console.error("Failed to fetch token:", res.statusText);

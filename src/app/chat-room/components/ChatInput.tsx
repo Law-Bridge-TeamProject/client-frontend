@@ -1,5 +1,6 @@
 "use client";
 
+import { Input } from "@/components/ui/input";
 import { Paperclip } from "lucide-react";
 import React, { useState, useRef } from "react";
 
@@ -49,10 +50,10 @@ const ChatInput: React.FC<Props> = ({ onSend, onFileChange, isSending }) => {
         onChange={handleFileChange}
       />
 
-      <input
+      <Input
         value={msg}
         onChange={(e) => setMsg(e.target.value)}
-        className="flex-1 rounded-full border border-gray-300 dark:border-neutral-600 bg-white dark:bg-neutral-700 px-4 py-2 text-sm text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-neutral-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        className="flex-1 rounded-full border border-gray-300 px-4 py-2 text-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
         placeholder="Type your message..."
         disabled={isSending}
       />
