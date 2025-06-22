@@ -1,14 +1,13 @@
 "use client";
+import { useRouter } from "next/navigation";
 
-import { useQueryQuery } from "@/generated";
-
-const Home = () => {
-  const { data, loading, error } = useQueryQuery();
-  console.log(data);
-  
+const homepage = () => {
+  const { push } = useRouter();
   return (
-    <div>Home</div>
-  )
-}
+    <div>
+      <button onClick={() => push("/sign-up")}>sign up</button>
+    </div>
+  );
+};
 
-export default Home
+export default homepage;

@@ -1,6 +1,11 @@
 import type { Metadata } from "next";
 import { ApolloWrapper } from "@/providers/ApolloWrapper";
 import { Geist, Geist_Mono } from "next/font/google";
+import {
+  ClerkProvider,
+  SignedIn,
+  UserButton,
+} from "@clerk/nextjs";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -26,11 +31,22 @@ export default function RootLayout({
   return (
     <html lang="en">
       <ApolloWrapper>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
-      </body>
+      <ClerkProvider>
+      <html lang="en">
+        <body
+          className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        >
+          <header className="flex justify-end items-center p-4 gap-4 h-16">
+            <SignedIn>
+              <UserButton />
+            </SignedIn>
+          </header>
+          <div className="flex flex-col items-center justify-center ">
+          {children}
+          </div>
+        </body>
+      </html>
+    </ClerkProvider>
       </ApolloWrapper>
     </html>
   );
