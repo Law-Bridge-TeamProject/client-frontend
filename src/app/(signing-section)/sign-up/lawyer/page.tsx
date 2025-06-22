@@ -1,12 +1,9 @@
 "use client";
 
 import { SignUp } from "@clerk/nextjs";
-// import { useEffect } from "react";
 
 export default function LawyerSignUpPage() {
-  // useEffect(() => {
-  //   localStorage.setItem("selected_role", "lawyer");
-  // }, []);
+
   return (
     <div className="min-h-screen flex items-center justify-center p-4">
       <SignUp

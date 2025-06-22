@@ -1,38 +1,3 @@
-// "use client";
-
-// import { useEffect } from "react";
-// import { useRouter } from "next/navigation";
-// import { useUser } from "@clerk/nextjs";
-
-// export default function AfterSignUpPage() {
-//   const { user, isLoaded } = useUser();
-//   const router = useRouter();
-
-//   useEffect(() => {
-//     const setRoleMetadata = async () => {
-//       if (!isLoaded || !user) return;
-
-//       const role = localStorage.getItem("selected_role") || "user";
-
-//       await fetch("/api/set-role", {
-//         method: "POST",
-//         headers: { "Content-Type": "application/json" },
-//         body: JSON.stringify({ role }),
-//       });
-
-//       if (role === "lawyer") {
-//         router.push("/lawyer-form");
-//       } else {
-//         router.push("/");
-//       }
-//     };
-
-//     setRoleMetadata();
-//   }, [isLoaded, user, router]);
-
-//   return <p className="text-center p-6">Бүртгэл амжилттай. Түр хүлээнэ үү...</p>;
-// }
-
 "use client";
 
 import { useEffect } from "react";
