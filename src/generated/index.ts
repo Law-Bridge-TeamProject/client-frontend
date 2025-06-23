@@ -17,99 +17,133 @@ export type Scalars = {
   Float: { input: number; output: number; }
 };
 
-export type Car = {
-  __typename?: 'Car';
-  mark?: Maybe<Scalars['String']['output']>;
+export type Appointment = {
+  __typename?: 'Appointment';
+  _id: Scalars['ID']['output'];
+  chatRoomId?: Maybe<Scalars['ID']['output']>;
+  createdAt?: Maybe<Scalars['String']['output']>;
+  lawyerId: Scalars['ID']['output'];
+  schedule: Scalars['String']['output'];
+  status: AppointmentStatus;
+  updatedAt?: Maybe<Scalars['String']['output']>;
+  userId: Scalars['ID']['output'];
 };
 
-export type CreateNewUserInput = {
-  age: Scalars['Int']['input'];
-  gender: Gender;
-  id: Scalars['String']['input'];
-  name: Scalars['String']['input'];
-};
-
-export enum Gender {
-  Female = 'FEMALE',
-  Male = 'MALE'
+export enum AppointmentStatus {
+  Cancelled = 'CANCELLED',
+  Completed = 'COMPLETED',
+  Confirmed = 'CONFIRMED',
+  Pending = 'PENDING'
 }
+
+export type CreateAppointmentInput = {
+  lawyerId: Scalars['ID']['input'];
+  schedule: Scalars['String']['input'];
+  userId: Scalars['ID']['input'];
+};
 
 export type Mutation = {
   __typename?: 'Mutation';
-  createNewuser: User;
+  createAppointment?: Maybe<Appointment>;
+  deleteAppointment?: Maybe<Scalars['Boolean']['output']>;
+  updateAppointmentStatus?: Maybe<Appointment>;
 };
 
 
-export type MutationCreateNewuserArgs = {
-  input?: InputMaybe<CreateNewUserInput>;
+export type MutationCreateAppointmentArgs = {
+  input: CreateAppointmentInput;
+};
+
+
+export type MutationDeleteAppointmentArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+export type MutationUpdateAppointmentStatusArgs = {
+  input: UpdateAppointmentStatusInput;
 };
 
 export type Query = {
   __typename?: 'Query';
-  getUser: Array<User>;
+  getAppointmentById?: Maybe<Appointment>;
+  getAppointments?: Maybe<Array<Maybe<Appointment>>>;
+  getAppointmentsByLawyer?: Maybe<Array<Maybe<Appointment>>>;
+  getAppointmentsByUser?: Maybe<Array<Maybe<Appointment>>>;
 };
 
-export type User = {
-  __typename?: 'User';
-  age: Scalars['Int']['output'];
-  car?: Maybe<Car>;
-  gender: Gender;
-  id: Scalars['String']['output'];
-  isAdmin?: Maybe<Scalars['Boolean']['output']>;
-  name: Scalars['String']['output'];
-  projects?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
+
+export type QueryGetAppointmentByIdArgs = {
+  id: Scalars['ID']['input'];
 };
 
-export type QueryQueryVariables = Exact<{ [key: string]: never; }>;
+
+export type QueryGetAppointmentsByLawyerArgs = {
+  lawyerId: Scalars['ID']['input'];
+};
 
 
-export type QueryQuery = { __typename?: 'Query', getUser: Array<{ __typename?: 'User', id: string, age: number, name: string, gender: Gender, isAdmin?: boolean | null, projects?: Array<string | null> | null, car?: { __typename?: 'Car', mark?: string | null } | null }> };
+export type QueryGetAppointmentsByUserArgs = {
+  userId: Scalars['ID']['input'];
+};
+
+export type UpdateAppointmentStatusInput = {
+  appointmentId: Scalars['ID']['input'];
+  status: AppointmentStatus;
+};
+
+export type GetAppointmentsByUserQueryVariables = Exact<{
+  userId: Scalars['ID']['input'];
+}>;
 
 
-export const QueryDocument = gql`
-    query Query {
-  getUser {
-    id
-    age
-    name
-    gender
-    isAdmin
-    projects
-    car {
-      mark
-    }
+export type GetAppointmentsByUserQuery = { __typename?: 'Query', getAppointmentsByUser?: Array<{ __typename?: 'Appointment', _id: string, userId: string, lawyerId: string, schedule: string, status: AppointmentStatus, chatRoomId?: string | null, createdAt?: string | null, updatedAt?: string | null } | null> | null };
+
+
+export const GetAppointmentsByUserDocument = gql`
+    query GetAppointmentsByUser($userId: ID!) {
+  getAppointmentsByUser(userId: $userId) {
+    _id
+    userId
+    lawyerId
+    schedule
+    status
+    chatRoomId
+    createdAt
+    updatedAt
   }
 }
     `;
 
 /**
- * __useQueryQuery__
+ * __useGetAppointmentsByUserQuery__
  *
- * To run a query within a React component, call `useQueryQuery` and pass it any options that fit your needs.
- * When your component renders, `useQueryQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useGetAppointmentsByUserQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAppointmentsByUserQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useQueryQuery({
+ * const { data, loading, error } = useGetAppointmentsByUserQuery({
  *   variables: {
+ *      userId: // value for 'userId'
  *   },
  * });
  */
-export function useQueryQuery(baseOptions?: Apollo.QueryHookOptions<QueryQuery, QueryQueryVariables>) {
+export function useGetAppointmentsByUserQuery(baseOptions: Apollo.QueryHookOptions<GetAppointmentsByUserQuery, GetAppointmentsByUserQueryVariables> & ({ variables: GetAppointmentsByUserQueryVariables; skip?: boolean; } | { skip: boolean; }) ) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<QueryQuery, QueryQueryVariables>(QueryDocument, options);
+        return Apollo.useQuery<GetAppointmentsByUserQuery, GetAppointmentsByUserQueryVariables>(GetAppointmentsByUserDocument, options);
       }
-export function useQueryLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<QueryQuery, QueryQueryVariables>) {
+export function useGetAppointmentsByUserLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAppointmentsByUserQuery, GetAppointmentsByUserQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<QueryQuery, QueryQueryVariables>(QueryDocument, options);
+          return Apollo.useLazyQuery<GetAppointmentsByUserQuery, GetAppointmentsByUserQueryVariables>(GetAppointmentsByUserDocument, options);
         }
-export function useQuerySuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<QueryQuery, QueryQueryVariables>) {
+export function useGetAppointmentsByUserSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetAppointmentsByUserQuery, GetAppointmentsByUserQueryVariables>) {
           const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
-          return Apollo.useSuspenseQuery<QueryQuery, QueryQueryVariables>(QueryDocument, options);
+          return Apollo.useSuspenseQuery<GetAppointmentsByUserQuery, GetAppointmentsByUserQueryVariables>(GetAppointmentsByUserDocument, options);
         }
-export type QueryQueryHookResult = ReturnType<typeof useQueryQuery>;
-export type QueryLazyQueryHookResult = ReturnType<typeof useQueryLazyQuery>;
-export type QuerySuspenseQueryHookResult = ReturnType<typeof useQuerySuspenseQuery>;
-export type QueryQueryResult = Apollo.QueryResult<QueryQuery, QueryQueryVariables>;
+export type GetAppointmentsByUserQueryHookResult = ReturnType<typeof useGetAppointmentsByUserQuery>;
+export type GetAppointmentsByUserLazyQueryHookResult = ReturnType<typeof useGetAppointmentsByUserLazyQuery>;
+export type GetAppointmentsByUserSuspenseQueryHookResult = ReturnType<typeof useGetAppointmentsByUserSuspenseQuery>;
+export type GetAppointmentsByUserQueryResult = Apollo.QueryResult<GetAppointmentsByUserQuery, GetAppointmentsByUserQueryVariables>;

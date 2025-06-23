@@ -1,13 +1,12 @@
-query Query {
-  getUser {
-    id
-    age
-    name
-    gender
-    isAdmin
-    projects
-    car {
-      mark
-    }
+query GetAppointmentsByUser($userId: ID!) {
+  getAppointmentsByUser(userId: $userId) {
+    _id
+    userId
+    lawyerId
+    schedule
+    status
+    chatRoomId
+    createdAt
+    updatedAt
   }
 }
