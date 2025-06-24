@@ -4,7 +4,6 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "predev": "graphql-codegen --config ./codegen.yml",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -17,6 +16,7 @@
     "@graphql-codegen/typescript-operations": "^4.6.1",
     "@graphql-codegen/typescript-react-apollo": "^4.3.3",
     "@graphql-codegen/typescript-resolvers": "^4.5.1",
+    "clerk": "^0.8.3",
     "graphql": "^16.11.0",
     "motion": "^12.18.1",
     "next": "15.3.3",
