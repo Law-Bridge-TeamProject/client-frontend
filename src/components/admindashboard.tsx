@@ -2,10 +2,10 @@ import { SidebarProvider } from "@/components/ui/sidebar";
 import { AdminSidebar } from "./AdminSidebar";
 import { DashboardHeader } from "./DashboardHeader";
 import { StatsCards } from "./StatsCards";
-import { DashboardCharts } from "./DashboardCharts";
+import { DashboardCharts } from "./DashBoardCharts";
 import { RecentActivity } from "./RecentActivity";
 import { UserTable } from "./UserTable";
-
+ 
 export function AdminDashboard() {
   return (
     <SidebarProvider>
