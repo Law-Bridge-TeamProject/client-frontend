@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { useUploadAvatar } from "../hooks/useUploadAvatar";
 import { ZodErrors } from "./ZodError";
 import type { FieldErrors, UseFormSetValue } from "react-hook-form";
-import type { FormData } from "@/app/Usukhuu/page";
+import { FormData } from "../page";
 
 type Props = {
   errors: FieldErrors<FormData>;
@@ -54,9 +54,8 @@ const Avatar = ({ errors, setValue }: Props) => {
         style={{ display: "none" }}
       />
       <div
-        className={`flex items-center justify-center bg-orange-200 size-full max-h-50 rounded-md border-dashed border-2 mb-2 cursor-pointer ${
-          isDragging ? "border-blue-500 bg-blue-50" : "border-gray-400"
-        }`}
+        className={`flex items-center justify-center bg-orange-200 size-full max-h-50 min-h-30 rounded-md border-dashed border-2 mb-2 cursor-pointer 
+          ${isDragging ? "border-blue-500 bg-blue-50" : "border-gray-400"}  `}
         onClick={openBrowse}
         onDrop={handleDrop}
         onDragOver={(e) => {

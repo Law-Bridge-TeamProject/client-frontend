@@ -31,7 +31,7 @@ export const useUploadAvatar = ({ onUpload }: { onUpload: (key: string) => void 
   const [uploading, setUploading] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
 
-  const getPreviewLink = (key: string) => (key ? `/Usukhuu/api/get?key=${encodeURIComponent(key)}` : "");
+  const getPreviewLink = (key: string) => (key ? `/lawyer-form/api/get?key=${encodeURIComponent(key)}` : "");
 
   const openBrowse = () => fileInputRef.current?.click();
 
@@ -39,8 +39,9 @@ export const useUploadAvatar = ({ onUpload }: { onUpload: (key: string) => void 
     setUploading(true);
     const formData = new FormData();
     formData.append("file", file);
+
     try {
-      const res = await fetch("/Usukhuu/api/upload", {
+      const res = await fetch("/lawyer-form/api/upload", {
         method: "POST",
         body: formData,
       });
@@ -81,7 +82,7 @@ export const useUploadAvatar = ({ onUpload }: { onUpload: (key: string) => void 
   const deleteImage = async () => {
     if (imageKey) {
       try {
-        await fetch("/Usukhuu/api/delete", {
+        await fetch("/lawyer-form/api/delete", {
           method: "POST",
           body: JSON.stringify({ key: imageKey }),
           headers: { "Content-Type": "application/json" },
