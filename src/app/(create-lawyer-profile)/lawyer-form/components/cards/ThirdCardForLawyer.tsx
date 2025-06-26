@@ -1,9 +1,10 @@
 import { FormData } from "../../page";
 import { ZodErrors } from "../ZodError";
-import React, { useState, useEffect } from "react";
-import { Button, Checkbox } from "@/components/ui/index";
+import { useState, useEffect } from "react";
+import { Button, Checkbox, Input } from "@/components/ui/index";
 import { FieldErrors, UseFormSetValue } from "react-hook-form";
 import { specializations } from "../../utils/specializations";
+import { formatMoneyDigits } from "../../utils/numberFormat";
 
 type Props = {
   errors: FieldErrors<FormData>;
@@ -17,6 +18,7 @@ const ThirdCardForLawyer = ({ errors, isSubmitting, goToPreviousStep, watchedSpe
   const handlePreviousStep = goToPreviousStep;
 
   const [recommendPaid, setRecommendPaid] = useState<{ [spec: string]: boolean }>({});
+  const [hourlyRates, setHourlyRates] = useState<{ [spec: string]: string }>({});
 
   useEffect(() => {
     setRecommendPaid((prev) => {
@@ -48,7 +50,7 @@ const ThirdCardForLawyer = ({ errors, isSubmitting, goToPreviousStep, watchedSpe
   return (
     <div className="space-y-10">
       <div>
-        <label className="block font-medium mb-1 text-[16px]">Талбар</label>
+        <label className="block font-medium mb-4 text-[16px]">Талбар</label>
         <div className="grid grid-cols-2 gap-2">
           {specializations.map((spec) => (
             <div key={spec} className="flex items-center space-x-2">
@@ -68,14 +70,14 @@ const ThirdCardForLawyer = ({ errors, isSubmitting, goToPreviousStep, watchedSpe
       </div>
 
       {watchedSpecializations.length > 0 && (
-        <div className="space-y-4">
-          <label className="block font-medium mb-1 text-[16px]">Та төлбөртэй үйлчилгээ санал болгох уу?</label>
+        <div className="space-y-4 relative">
+          <label className="block font-medium mb-4 text-[16px]">Та төлбөртэй үйлчилгээ санал болгох уу?</label>
           {watchedSpecializations.map((spec) => {
             const isChecked = recommendPaid[spec] || false;
             return (
               <div
                 key={spec}
-                className={`flex items-center space-x-2 p-3 border rounded-lg transition-colors ${
+                className={`relative flex w-full items-center space-x-2 p-3 border rounded-lg transition-colors ${
                   isChecked ? "bg-green-200 border-green-500" : "border-blue-300 hover:bg-gray-100"
                 } cursor-pointer`}
                 onClick={(e) => {
@@ -99,8 +101,22 @@ const ThirdCardForLawyer = ({ errors, isSubmitting, goToPreviousStep, watchedSpe
                   className="cursor-pointer"
                 />
                 <label htmlFor={`recommend-paid-${spec}`} className="text-sm cursor-pointer">
-                  {`"${spec}" талбарт төлбөртэй үйлчилгээ үзүүлнэ`}
+                  {`${spec} ${isChecked ? "" : "талбарт төлбөртэй үйлчилгээ үзүүлнэ"}`}
                 </label>
+                <div className={`${!isChecked ? "hidden" : "ml-auto"}`}>
+                  <Input
+                    placeholder="Таны цагийн үнэлэмж?"
+                    className="w-60 bg-white"
+                    value={hourlyRates[spec] || ""}
+                    onChange={(e) => {
+                      const raw = e.target.value.replace(/[^0-9]/g, "");
+                      setHourlyRates((prev) => ({
+                        ...prev,
+                        [spec]: formatMoneyDigits(raw),
+                      }));
+                    }}
+                  />
+                </div>
               </div>
             );
           })}

@@ -30,4 +30,5 @@ export const schemaLawyerProfile = z.object({
       message: "Please upload required documents",
     }
   ),
+  hourlyRate: z.string(),
 });
