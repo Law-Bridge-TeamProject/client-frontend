@@ -1,10 +1,9 @@
 import { FormData } from "../../page";
 import { ZodErrors } from "../ZodError";
 import React, { useState, useEffect } from "react";
-import { Input, Button, Checkbox } from "@/components/ui/index";
+import { Button, Checkbox } from "@/components/ui/index";
 import { FieldErrors, UseFormSetValue } from "react-hook-form";
-
-import { specializations } from "@/app/Usukhuu/utils/specializations";
+import { specializations } from "../../utils/specializations";
 
 type Props = {
   errors: FieldErrors<FormData>;

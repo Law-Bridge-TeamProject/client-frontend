@@ -1,9 +1,8 @@
-import React, { useState } from "react";
 import { UseFormRegister, FieldErrors, UseFormSetValue } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { ZodErrors } from "../ZodError";
-import type { FormData } from "@/app/Usukhuu/page";
+import { FormData } from "../../page";
 import Avatar from "../Avatar";
 
 type Props = {

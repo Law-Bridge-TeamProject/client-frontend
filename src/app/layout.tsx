@@ -27,21 +27,13 @@ export default function RootLayout({
   return (
     <ClerkProvider>
       <ApolloWrapper>
-        <html
-          lang="en"
-          className={`${geistSans.variable} ${geistMono.variable}`}
-        >
-          <head />
-        </html>
-        <html lang="en">
-          <body
-            className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-          >
-            <header className="flex justify-end items-center p-4 gap-4 h-16">
+        <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
+          <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+            {/* <header className="flex justify-end items-center p-4 gap-4 h-16">
               <SignedIn>
                 <UserButton />
               </SignedIn>
-            </header>
+            </header> */}
             {children}
           </body>
         </html>
