@@ -1,0 +1,9 @@
+mutation CreateAchievement($input: CreateAchievementInput!) {
+  createAchievement(input: $input) {
+    _id
+    description
+    icon
+    threshold
+    title
+  }
+}

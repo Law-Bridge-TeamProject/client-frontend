@@ -34,7 +34,9 @@ const LawyerRegistrationForm = () => {
 
     Object.entries(data).forEach(([key, value]) => {
       if (key === "specializations") {
-        (value as string[]).forEach((spec) => formData.append("specializations", spec));
+        (value as string[]).forEach((spec) =>
+          formData.append("specializations", spec)
+        );
       } else if (key === "profilePicture" || key === "documents") {
         Array.from(value as FileList).forEach((file) => {
           formData.append(key, file);
@@ -63,7 +65,11 @@ const LawyerRegistrationForm = () => {
     }
   };
 
-  const CurrentStepComponent = [FirstCardForLawyer, SecondCardForLawyer, ThirdCardForLawyer][currentStep];
+  const CurrentStepComponent = [
+    FirstCardForLawyer,
+    SecondCardForLawyer,
+    ThirdCardForLawyer,
+  ][currentStep];
 
   return (
     <div className="w-screen min-h-screen flex justify-center items-center p-4">
@@ -71,7 +77,9 @@ const LawyerRegistrationForm = () => {
         onSubmit={handleSubmit(onSubmit)} //
         className="w-full max-w-2xl border-2 border-blue-400 shadow-2xl p-8 rounded-lg space-y-6 "
       >
-        <h1 className="text-2xl font-bold mb-6 text-center">Өмгөөлөгчийн бүртгэл</h1>
+        <h1 className="text-2xl font-bold mb-6 text-center">
+          Өмгөөлөгчийн бүртгэл
+        </h1>
         <AnimatePresence mode="wait">
           <motion.div
             key={currentStep}
@@ -99,48 +107,3 @@ const LawyerRegistrationForm = () => {
 };
 
 export default LawyerRegistrationForm;
-
-// import { useState } from "react";
-// import { useUser } from "@clerk/nextjs";
-// import { useRouter } from "next/navigation";
-
-// export default function LawyerFormPage() {
-//   const { user } = useUser();
-//   const { push } = useRouter();
-//   const [data, setData] = useState({ name: "", license: "" });
-
-//   const handleSubmit = async (e: React.FormEvent) => {
-//     e.preventDefault();
-//     await fetch("/api/lawyer/lawyer-request", {
-//       method: "POST",
-//       headers: { "Content-Type": "application/json" },
-//       body: JSON.stringify({ ...data, userId: user?.id }),
-//     });
-//     push("/pending-approval");
-//   };
-
-//   return (
-//     <div className="p-4 max-w-md mx-auto">
-//       <h2 className="text-xl font-semibold mb-4">Өмгөөлөгчийн бүртгэл</h2>
-//       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-//         <input
-//           type="text"
-//           placeholder="Овог нэр"
-//           value={data.name}
-//           onChange={(e) => setData({ ...data, name: e.target.value })}
-//           className="border p-2"
-//         />
-//         <input
-//           type="text"
-//           placeholder="Лиценз дугаар"
-//           value={data.license}
-//           onChange={(e) => setData({ ...data, license: e.target.value })}
-//           className="border p-2"
-//         />
-//         <button type="submit" className="bg-green-600 text-white p-2 rounded">
-//           Илгээх
-//         </button>
-//       </form>
-//     </div>
-//   );
-// }
