@@ -30,7 +30,7 @@ export default function RootLayout({
       <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
         <head />
       </html>
-      <html lang="en">
+      <div lang="en">
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         >
@@ -41,7 +41,7 @@ export default function RootLayout({
           </header>
           {children}
         </body>
-      </html>
+      </div>
       {/* </ApolloWrapper> */}
     </ClerkProvider>
   );
