@@ -2,8 +2,7 @@ import { auth, clerkClient } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
-  const { userId } = await auth()
-
+  const { userId } = await auth();
 
   if (!userId) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
@@ -11,8 +10,7 @@ export async function POST(req: Request) {
 
   const { role }: { role: "user" | "lawyer" } = await req.json();
 
-  console.log( role, "role");
-  
+  console.log(role, "role");
 
   if (!["user", "lawyer"].includes(role)) {
     return NextResponse.json({ error: "Invalid role" }, { status: 400 });
@@ -24,6 +22,15 @@ export async function POST(req: Request) {
       role,
     },
   });
+
+  if (role === "lawyer") {
+    await client.users.updateUserMetadata(userId, {
+      publicMetadata: {
+        role: "lawyer",
+        verified: "false",
+      },
+    });
+  }
 
   return NextResponse.json({ message: "Role saved" }, { status: 200 });
 }
