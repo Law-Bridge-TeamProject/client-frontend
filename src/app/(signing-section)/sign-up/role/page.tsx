@@ -20,7 +20,6 @@ export default function AfterSignUpPage() {
       }
 
       try {
-        // Clerk API руу role хадгалах хүсэлт
         const res = await fetch("/api/set-role", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -29,7 +28,6 @@ export default function AfterSignUpPage() {
 
         if (!res.ok) throw new Error("Failed to save role");
 
-        // Role-оор дараагийн хуудас руу чиглүүлнэ
         if (role === "lawyer") {
           router.push("/lawyer-form");
         } else {
