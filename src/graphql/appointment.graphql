@@ -1,9 +1,8 @@
-mutation CreateAchievement($input: CreateAchievementInput!) {
-  createAchievement(input: $input) {
-    _id
-    description
-    icon
-    threshold
-    title
+mutation CreateAppointment($input: CreateAppointmentInput!) {
+  createAppointment(input: $input) {
+    lawyerId
+    schedule
+    status
+    chatRoomId
   }
 }
