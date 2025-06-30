@@ -1,11 +1,12 @@
-"use client";
-import { useRouter } from "next/navigation";
+import { SignedOut } from "@clerk/nextjs";
+import MainPage from "./(landing-page)/MainPage";
 
 const homepage = () => {
-  const { push } = useRouter();
   return (
     <div>
-      <button onClick={() => push("/sign-up")}>sign up</button>
+      <SignedOut>
+        <MainPage />
+      </SignedOut>
     </div>
   );
 };

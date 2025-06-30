@@ -97,7 +97,7 @@ export type CreateAppointmentMutationVariables = Exact<{
 }>;
 
 
-export type CreateAppointmentMutation = { __typename?: 'Mutation', createAppointment?: { __typename?: 'Appointment', lawyerId: string, schedule: string, status: AppointmentStatus, chatRoomId?: string | null, createdAt?: string | null, updatedAt?: string | null } | null };
+export type CreateAppointmentMutation = { __typename?: 'Mutation', createAppointment?: { __typename?: 'Appointment', lawyerId: string, schedule: string, status: AppointmentStatus, chatRoomId?: string | null } | null };
 
 
 export const CreateAppointmentDocument = gql`
@@ -107,8 +107,6 @@ export const CreateAppointmentDocument = gql`
     schedule
     status
     chatRoomId
-    createdAt
-    updatedAt
   }
 }
     `;
