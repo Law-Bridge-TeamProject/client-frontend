@@ -14,20 +14,22 @@ export default function LoginForm({
   ...props
 }: React.ComponentProps<"div">) {
   const { signIn, isLoaded, setActive } = useSignIn();
-  const [email, setEmail] = useState("");
+  const [identifier, setIdentifier] = useState("");
   const [otpCode, setOtpCode] = useState("");
   const [pending, setPending] = useState(false);
   const [error, setError] = useState("");
+  const isPhone = /^\+?[0-9]{8,15}$/.test(identifier);
+  const strategy = isPhone ? "phone_code" : "email_code";
 
-  const handleEmailSubmit = async (e: React.FormEvent) => {
+  const handleIdentifierSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!isLoaded) return;
     setError("");
 
     try {
       const res = await signIn.create({
-        identifier: email,
-        strategy: "email_code",
+        identifier,
+        strategy,
       });
 
       if (res.status === "needs_first_factor") {
@@ -43,13 +45,9 @@ export default function LoginForm({
       ) {
         setError((err as any).errors[0].message);
       } else {
-        setError("Email илгээхэд алдаа гарлаа.");
+        setError("Код илгээхэд алдаа гарлаа.");
       }
     }
-  };
-
-  type ClerkError = {
-    errors: { message: string }[];
   };
 
   const handleOTPSubmit = async (e: React.FormEvent) => {
@@ -59,7 +57,7 @@ export default function LoginForm({
 
     try {
       const res = await signIn.attemptFirstFactor({
-        strategy: "email_code",
+        strategy,
         code: otpCode,
       });
 
@@ -72,10 +70,10 @@ export default function LoginForm({
         typeof err === "object" &&
         err !== null &&
         "errors" in err &&
-        Array.isArray((err as ClerkError).errors) &&
-        (err as ClerkError).errors[0]?.message
+        Array.isArray((err as any).errors) &&
+        (err as any).errors[0]?.message
       ) {
-        setError((err as ClerkError).errors[0].message);
+        setError((err as any).errors[0].message);
       } else {
         setError("OTP код буруу байна.");
       }
@@ -91,7 +89,7 @@ export default function LoginForm({
         <CardContent className="grid p-0 md:grid-cols-2">
           <div className="p-6 md:p-8 flex flex-col justify-center">
             <form
-              onSubmit={pending ? handleOTPSubmit : handleEmailSubmit}
+              onSubmit={pending ? handleOTPSubmit : handleIdentifierSubmit}
               className="flex flex-col gap-6"
             >
               <div className="flex flex-col items-center text-center">
@@ -104,13 +102,15 @@ export default function LoginForm({
               {!pending ? (
                 <>
                   <div className="grid gap-3">
-                    <Label htmlFor="email">И-мэйл хаяг</Label>
+                    <Label htmlFor="identifier">
+                      Имэйл эсвэл утасны дугаар
+                    </Label>
                     <Input
-                      id="email"
-                      type="email"
-                      placeholder="name@gmail.com"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
+                      id="identifier"
+                      type="text"
+                      placeholder="name@gmail.com эсвэл +97688112233"
+                      value={identifier}
+                      onChange={(e) => setIdentifier(e.target.value)}
                       required
                     />
                   </div>
@@ -127,7 +127,10 @@ export default function LoginForm({
                     <Label>Баталгаажуулах код</Label>
                     <OtpInput onChange={setOtpCode} />
                   </div>
-                  <Button type="submit" className="w-full">
+                  <Button
+                    type="submit"
+                    className="w-full bg-[#2563eb] text-white"
+                  >
                     Нэвтрэх
                   </Button>
                 </>
@@ -144,6 +147,7 @@ export default function LoginForm({
               </a>
             </div>
           </div>
+
           <div className="bg-muted relative hidden md:block">
             <img
               src="/lawbridgeLOGO.png"
