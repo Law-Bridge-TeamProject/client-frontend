@@ -1,7 +1,14 @@
-"use client";
+import { SignedOut } from "@clerk/nextjs";
+import MainPage from "./(landing-page)/MainPage";
 
 const homepage = () => {
-  return <div>homepage</div>;
+  return (
+    <div>
+      <SignedOut>
+        <MainPage />
+      </SignedOut>
+    </div>
+  );
 };
 
 export default homepage;
