@@ -12,12 +12,15 @@ type Props = {
   setValue: UseFormSetValue<FormData>;
 };
 
-const FirstCardForLawyer = ({ register, errors, goToNextStep, setValue }: Props) => {
+const FirstCardForLawyer = ({
+  register,
+  errors,
+  goToNextStep,
+  setValue,
+}: Props) => {
   const handleNextStep = () => {
-    if (!errors.firstName && !errors.lastName && !errors.email && !errors.avatar) {
-      goToNextStep && goToNextStep();
-    } else {
-      goToNextStep && goToNextStep();
+    if (goToNextStep) {
+      goToNextStep();
     }
   };
 
@@ -29,7 +32,11 @@ const FirstCardForLawyer = ({ register, errors, goToNextStep, setValue }: Props)
             Нэр
           </label>
           <Input id="firstName" {...register("firstName")} />
-          <ZodErrors error={errors.firstName?.message ? [errors.firstName.message] : undefined} />
+          <ZodErrors
+            error={
+              errors.firstName?.message ? [errors.firstName.message] : undefined
+            }
+          />
         </div>
 
         <div>
@@ -37,7 +44,11 @@ const FirstCardForLawyer = ({ register, errors, goToNextStep, setValue }: Props)
             Овог
           </label>
           <Input id="lastName" {...register("lastName")} />
-          <ZodErrors error={errors.lastName?.message ? [errors.lastName.message] : undefined} />
+          <ZodErrors
+            error={
+              errors.lastName?.message ? [errors.lastName.message] : undefined
+            }
+          />
         </div>
       </div>
 
@@ -46,12 +57,17 @@ const FirstCardForLawyer = ({ register, errors, goToNextStep, setValue }: Props)
           Email
         </label>
         <Input id="eMail" {...register("email")} />
-        <ZodErrors error={errors.email?.message ? [errors.email.message] : undefined} />
+        <ZodErrors
+          error={errors.email?.message ? [errors.email.message] : undefined}
+        />
       </div>
 
       <Avatar errors={errors} setValue={setValue} />
 
-      <Button onClick={handleNextStep} className="w-full bg-blue-500 hover:bg-blue-400 cursor-pointer text-white">
+      <Button
+        onClick={handleNextStep}
+        className="w-full bg-blue-500 hover:bg-blue-400 cursor-pointer text-white"
+      >
         Дараачийн
       </Button>
     </div>
