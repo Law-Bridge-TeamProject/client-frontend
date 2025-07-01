@@ -34,9 +34,7 @@ const LawyerRegistrationForm = () => {
 
     Object.entries(data).forEach(([key, value]) => {
       if (key === "specializations") {
-        (value as string[]).forEach((spec) =>
-          formData.append("specializations", spec)
-        );
+        (value as string[]).forEach((spec) => formData.append("specializations", spec));
       } else if (key === "profilePicture" || key === "documents") {
         Array.from(value as FileList).forEach((file) => {
           formData.append(key, file);
@@ -65,21 +63,20 @@ const LawyerRegistrationForm = () => {
     }
   };
 
-  const CurrentStepComponent = [
-    FirstCardForLawyer,
-    SecondCardForLawyer,
-    ThirdCardForLawyer,
-  ][currentStep];
+  const CurrentStepComponent = [FirstCardForLawyer, SecondCardForLawyer, ThirdCardForLawyer][currentStep];
 
   return (
     <div className="w-screen min-h-screen flex justify-center items-center p-4">
+      <img
+        src="chris-brignola-X2CxUXFqKcM-unsplash.jpg"
+        alt=""
+        className="w-screen h-screen object-fill absolute -z-20 "
+      />
       <form
-        onSubmit={handleSubmit(onSubmit)} //
-        className="w-full max-w-2xl border-2 border-blue-400 shadow-2xl p-8 rounded-lg space-y-6 "
+        onSubmit={handleSubmit(onSubmit)}
+        className="w-full max-w-2xl border-2 border-[#2bc0e4] shadow-2xl p-8 rounded-lg space-y-6 bg-[#ebf7fa]/50 backdrop-blur-sm"
       >
-        <h1 className="text-2xl font-bold mb-6 text-center">
-          Өмгөөлөгчийн бүртгэл
-        </h1>
+        <h1 className="text-2xl font-bold mb-6 text-center">Өмгөөлөгчийн бүртгэл</h1>
         <AnimatePresence mode="wait">
           <motion.div
             key={currentStep}
