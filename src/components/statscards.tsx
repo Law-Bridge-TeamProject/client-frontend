@@ -3,37 +3,37 @@ import { Card, CardContent } from "@/components/ui/card";
 
 const stats = [
   {
-    title: "Total Revenue",
-    value: "$45,231.89",
+    title: "Нийт Орлого",
+    value: "45,231.89₮",
     change: "+20.1%",
-    trend: "up",
+    trend: "өсөлт",
     icon: DollarSign,
     color: "text-green-600",
     bgColor: "bg-green-50",
   },
   {
-    title: "Active Users",
+    title: "Идэвхтэй Хэрэглэгчид",
     value: "2,350",
     change: "+18.0%",
-    trend: "up",
+    trend: "өсөлт",
     icon: Users,
     color: "text-blue-600",
     bgColor: "bg-blue-50",
   },
   {
-    title: "Total Orders",
+    title: "Нийт Уулзалт",
     value: "1,234",
     change: "-4.3%",
-    trend: "down",
+    trend: "бууралт",
     icon: ShoppingCart,
     color: "text-orange-600",
     bgColor: "bg-orange-50",
   },
   {
-    title: "Conversion Rate",
+    title: "Худалдааны Өсөлт",
     value: "3.24%",
     change: "+12.5%",
-    trend: "up",
+    trend: "өсөлт",
     icon: Activity,
     color: "text-purple-600",
     bgColor: "bg-purple-50",
@@ -61,7 +61,7 @@ export function StatsCards() {
                   }`}>
                     {stat.change}
                   </span>
-                  <span className="text-sm text-gray-500 ml-1">from last month</span>
+                  <span className="text-sm text-gray-500 ml-1">Өмнөх сар</span>
                 </div>
               </div>
               <div className={`p-3 rounded-full ${stat.bgColor}`}>

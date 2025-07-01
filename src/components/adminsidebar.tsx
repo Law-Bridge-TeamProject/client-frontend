@@ -27,43 +27,33 @@ import { Button } from "@/components/ui/button";
 
 const menuItems = [
   {
-    title: "Dashboard",
+    title: "Хянах самбар",
     url: "#",
     icon: LayoutDashboard,
     isActive: true,
   },
   {
-    title: "Users",
+    title: "Хэрэглэгчид",
     url: "#",
     icon: Users,
   },
   {
-    title: "Orders",
-    url: "#",
-    icon: ShoppingCart,
-  },
-  {
-    title: "Analytics",
+    title: "Шинжилт",
     url: "#",
     icon: BarChart3,
   },
   {
-    title: "Reports",
+    title: "Тайлан",
     url: "#",
     icon: FileText,
   },
   {
-    title: "Billing",
-    url: "#",
-    icon: CreditCard,
-  },
-  {
-    title: "Notifications",
+    title: "Мэдэгдлүүд",
     url: "#",
     icon: Bell,
   },
   {
-    title: "Settings",
+    title: "Тохиргоо",
     url: "#",
     icon: Settings,
   },
@@ -84,7 +74,7 @@ export function AdminSidebar() {
       <SidebarContent className="px-4 py-6">
         <SidebarGroup>
           <SidebarGroupLabel className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-4">
-            Main Menu
+            Үндсэн цэс
           </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu className="space-y-2">
@@ -115,8 +105,8 @@ export function AdminSidebar() {
             <AvatarFallback className="bg-blue-600 text-white">JD</AvatarFallback>
           </Avatar>
           <div className="flex-1 min-w-0">
-            <p className="text-sm font-medium text-gray-900 truncate">John Doe</p>
-            <p className="text-xs text-gray-500 truncate">john@example.com</p>
+            <p className="text-sm font-medium text-gray-900 truncate">Админ</p>
+            <p className="text-xs text-gray-500 truncate">Тавтай Морил</p>
           </div>
           <Button variant="ghost" size="sm" className="p-1">
             <LogOut className="w-4 h-4" />

@@ -2,19 +2,19 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line, PieChart, Pie, Cell } from "recharts";
 
 const barData = [
-  { name: "Jan", revenue: 4000, orders: 240 },
-  { name: "Feb", revenue: 3000, orders: 139 },
-  { name: "Mar", revenue: 2000, orders: 980 },
-  { name: "Apr", revenue: 2780, orders: 390 },
-  { name: "May", revenue: 1890, orders: 480 },
-  { name: "Jun", revenue: 2390, orders: 380 },
+  { name: "Нэг сар", revenue: 4000, orders: 240 },
+  { name: "Хоёр сар", revenue: 3000, orders: 139 },
+  { name: "Гурван сар", revenue: 2000, orders: 980 },
+  { name: "Дөрвөн сар", revenue: 2780, orders: 390 },
+  { name: "Таван сар", revenue: 1890, orders: 480 },
+  { name: "Зургаан сар", revenue: 2390, orders: 380 },
 ];
 
 const pieData = [
-  { name: "Desktop", value: 400, color: "#3B82F6" },
-  { name: "Mobile", value: 300, color: "#10B981" },
-  { name: "Tablet", value: 200, color: "#F59E0B" },
-  { name: "Other", value: 100, color: "#EF4444" },
+  { name: "Компьютер", value: 400, color: "#3B82F6" },
+  { name: "Мобайл", value: 300, color: "#10B981" },
+  { name: "Таблет", value: 200, color: "#F59E0B" },
+  { name: "Бусад", value: 100, color: "#EF4444" },
 ];
 
 export function DashboardCharts() {
@@ -22,8 +22,8 @@ export function DashboardCharts() {
     <div className="space-y-6">
       <Card className="bg-white border shadow-sm">
         <CardHeader>
-          <CardTitle>Revenue Overview</CardTitle>
-          <CardDescription>Monthly revenue and order statistics</CardDescription>
+          <CardTitle>Нийт орлого</CardTitle>
+          <CardDescription>Сар бүрийн орлого болон захиалгын статистик</CardDescription>
         </CardHeader>
         <CardContent>
           <ResponsiveContainer width="100%" height={300}>
@@ -47,8 +47,8 @@ export function DashboardCharts() {
 
       <Card className="bg-white border shadow-sm">
         <CardHeader>
-          <CardTitle>Traffic Sources</CardTitle>
-          <CardDescription>User traffic by device type</CardDescription>
+          <CardTitle>Хандагч</CardTitle>
+          <CardDescription>Хэрэглэгчийн хандалт төхөөрөмжийн төрөл</CardDescription>
         </CardHeader>
         <CardContent>
           <ResponsiveContainer width="100%" height={250}>

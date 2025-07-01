@@ -12,8 +12,8 @@ export function DashboardHeader() {
           <Menu className="w-5 h-5" />
         </SidebarTrigger>
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
-          <p className="text-gray-600">Welcome back, John! Here's what's happening today.</p>
+          <h1 className="text-2xl font-bold text-gray-900">Хянах самбар</h1>
+          <p className="text-gray-600">Тавтай Морил, Админ! Өнөөдрын мэдээлэл.</p>
         </div>
       </div>
       
@@ -21,7 +21,7 @@ export function DashboardHeader() {
         <div className="relative hidden md:block">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
           <Input
-            placeholder="Search..."
+            placeholder="Хайх..."
             className="pl-10 w-64"
           />
         </div>

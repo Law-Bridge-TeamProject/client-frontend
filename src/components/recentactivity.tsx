@@ -5,63 +5,63 @@ import { Badge } from "@/components/ui/badge";
 const activities = [
   {
     id: 1,
-    user: "Alice Johnson",
-    action: "completed order",
+    user: "Алтан Цэцэг",
+    action: "захиалгыг гүйцэтгэсэн",
     target: "#12345",
-    time: "2 minutes ago",
+    time: "2 минутын өмнө",
     avatar: "/placeholder.svg",
-    status: "success",
+    status: "Амжилттай",
   },
   {
     id: 2,
-    user: "Bob Smith",
-    action: "created account",
+    user: "Бат-Эрдэнэ",
+    action: "акаунт үүсгэсэн",
     target: "",
-    time: "5 minutes ago",
+    time: "5 минутын өмнө",
     avatar: "/placeholder.svg",
-    status: "info",
+    status: "Мэдээлэл",
   },
   {
     id: 3,
-    user: "Carol Davis",
-    action: "updated profile",
+    user: "Ёндонжамц Сайнбаяр",
+    action: "профайлыг шинэчилсэн",
     target: "",
-    time: "10 minutes ago",
+    time: "10 минутын өмнө",
     avatar: "/placeholder.svg",
-    status: "warning",
+    status: "Анхааруулга",
   },
   {
     id: 4,
-    user: "David Wilson",
-    action: "made payment",
+    user: "Даваажаргал Ганболд",
+    action: "Төлбөр төлөгдсөн",
     target: "$299.00",
-    time: "15 minutes ago",
+    time: "15 минутын өмнө",
     avatar: "/placeholder.svg",
-    status: "success",
+    status: "Амжилттай",
   },
   {
     id: 5,
-    user: "Eva Brown",
-    action: "left review",
-    target: "5 stars",
-    time: "1 hour ago",
+    user: "Эвээл Солонго",
+    action: "сэтгэгдэл үлдээсэн",
+    target: "5 од",
+    time: "1 цагийн өмнө",
     avatar: "/placeholder.svg",
-    status: "info",
+    status: "Мэдээлэл",
   },
 ];
 
 const statusColors = {
-  success: "bg-green-100 text-green-800",
-  info: "bg-blue-100 text-blue-800",
-  warning: "bg-yellow-100 text-yellow-800",
+  Амжилттай: "bg-green-100 text-green-800",
+  Мэдээлэл: "bg-blue-100 text-blue-800",
+  Анхааруулга: "bg-yellow-100 text-yellow-800",
 };
 
 export function RecentActivity() {
   return (
     <Card className="bg-white border shadow-sm">
       <CardHeader>
-        <CardTitle>Recent Activity</CardTitle>
-        <CardDescription>Latest user actions and system events</CardDescription>
+        <CardTitle>Сүүлийн үйл ажиллагаа</CardTitle>
+        <CardDescription>Хэрэглэгчийн сүүлийн үйл ажиллагаа болон системийн үйл явдлууд</CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
         {activities.map((activity) => (
