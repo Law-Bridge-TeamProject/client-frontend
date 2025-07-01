@@ -87,6 +87,13 @@ export default function LoginForm({
     >
       <Card className="overflow-hidden p-0 border-[#dbeafe]">
         <CardContent className="grid p-0 md:grid-cols-2">
+          <div className="bg-muted relative hidden md:block">
+            <img
+              src="/lawbridgeLOGO.png"
+              alt="Image"
+              className="absolute inset-0 h-full w-full object-cover"
+            />
+          </div>
           <div className="p-6 md:p-8 flex flex-col justify-center">
             <form
               onSubmit={pending ? handleOTPSubmit : handleIdentifierSubmit}
@@ -146,14 +153,6 @@ export default function LoginForm({
                 Бүртгэл үүсгэх
               </a>
             </div>
-          </div>
-
-          <div className="bg-muted relative hidden md:block">
-            <img
-              src="/lawbridgeLOGO.png"
-              alt="Image"
-              className="absolute inset-0 h-full w-full object-cover"
-            />
           </div>
         </CardContent>
       </Card>
