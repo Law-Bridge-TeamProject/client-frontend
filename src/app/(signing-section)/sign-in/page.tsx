@@ -33,14 +33,29 @@ export default function LoginForm({
       if (res.status === "needs_first_factor") {
         setPending(true);
       }
-    } catch (err: any) {
-      setError(err.errors?.[0]?.message || "Email илгээхэд алдаа гарлаа.");
+    } catch (err: unknown) {
+      if (
+        typeof err === "object" &&
+        err !== null &&
+        "errors" in err &&
+        Array.isArray((err as any).errors) &&
+        (err as any).errors[0]?.message
+      ) {
+        setError((err as any).errors[0].message);
+      } else {
+        setError("Email илгээхэд алдаа гарлаа.");
+      }
     }
+  };
+
+  type ClerkError = {
+    errors: { message: string }[];
   };
 
   const handleOTPSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!isLoaded) return;
+    setError("");
 
     try {
       const res = await signIn.attemptFirstFactor({
@@ -52,8 +67,18 @@ export default function LoginForm({
         await setActive({ session: res.createdSessionId });
         window.location.href = "/";
       }
-    } catch (err: any) {
-      setError(err.errors?.[0]?.message || "OTP код буруу байна.");
+    } catch (err: unknown) {
+      if (
+        typeof err === "object" &&
+        err !== null &&
+        "errors" in err &&
+        Array.isArray((err as ClerkError).errors) &&
+        (err as ClerkError).errors[0]?.message
+      ) {
+        setError((err as ClerkError).errors[0].message);
+      } else {
+        setError("OTP код буруу байна.");
+      }
     }
   };
 

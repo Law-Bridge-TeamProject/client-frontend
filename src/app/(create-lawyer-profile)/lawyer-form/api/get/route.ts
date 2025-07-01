@@ -4,7 +4,10 @@ const z = process.env.R2_PUBLIC_DOMAIN;
 export async function GET(req: NextRequest) {
   const imageKey = req.nextUrl.searchParams.get("key");
   if (!imageKey) {
-    return NextResponse.json({ error: "Image key is required" }, { status: 400 });
+    return NextResponse.json(
+      { error: "Image key is required" },
+      { status: 400 }
+    );
   }
 
   const imageUrl = `${z}/${imageKey}`;
@@ -26,7 +29,10 @@ export async function GET(req: NextRequest) {
         "Cache-Control": "public, max-age=31536000, immutable",
       },
     });
-  } catch (error) {
-    return NextResponse.json({ error: "Failed to fetch image" }, { status: 500 });
+  } catch {
+    return NextResponse.json(
+      { error: "Failed to fetch image" },
+      { status: 500 }
+    );
   }
 }
