@@ -24,6 +24,8 @@ import {
 } from "@/components/ui/sidebar";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
+import { link } from "fs";
+import { PendingUsersTable } from "@/components/PendingUsersTable";
 
 const menuItems = [
   {
@@ -36,9 +38,10 @@ const menuItems = [
     title: "Хэрэглэгчид",
     url: "#",
     icon: Users,
+    link: "@/components/PendingUsersTable",
   },
   {
-    title: "Шинжилт",
+    title: "Шинжилгээ",
     url: "#",
     icon: BarChart3,
   },

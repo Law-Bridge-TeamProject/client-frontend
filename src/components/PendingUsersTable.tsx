@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import { Check, X, Eye, Mail, Calendar, MapPin } from "lucide-react";
+import { Check, X, Eye, Mail, Calendar, MapPin, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
