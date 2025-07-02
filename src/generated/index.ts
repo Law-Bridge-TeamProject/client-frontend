@@ -773,6 +773,11 @@ export type CreateAppointmentMutationVariables = Exact<{
 
 export type CreateAppointmentMutation = { __typename?: 'Mutation', createAppointment?: { __typename?: 'Appointment', lawyerId: string, schedule: string, status: AppointmentStatus, chatRoomId?: string | null } | null };
 
+export type GetSpecializationsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetSpecializationsQuery = { __typename?: 'Query', getSpecializations: Array<{ __typename?: 'Specialization', id: string, categoryName: SpecializationCategory, subscription: boolean, pricePerHour?: number | null }> };
+
 
 export const CreateAppointmentDocument = gql`
     mutation CreateAppointment($input: CreateAppointmentInput!) {
@@ -810,3 +815,45 @@ export function useCreateAppointmentMutation(baseOptions?: Apollo.MutationHookOp
 export type CreateAppointmentMutationHookResult = ReturnType<typeof useCreateAppointmentMutation>;
 export type CreateAppointmentMutationResult = Apollo.MutationResult<CreateAppointmentMutation>;
 export type CreateAppointmentMutationOptions = Apollo.BaseMutationOptions<CreateAppointmentMutation, CreateAppointmentMutationVariables>;
+export const GetSpecializationsDocument = gql`
+    query GetSpecializations {
+  getSpecializations {
+    id
+    categoryName
+    subscription
+    pricePerHour
+  }
+}
+    `;
+
+/**
+ * __useGetSpecializationsQuery__
+ *
+ * To run a query within a React component, call `useGetSpecializationsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetSpecializationsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetSpecializationsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetSpecializationsQuery(baseOptions?: Apollo.QueryHookOptions<GetSpecializationsQuery, GetSpecializationsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetSpecializationsQuery, GetSpecializationsQueryVariables>(GetSpecializationsDocument, options);
+      }
+export function useGetSpecializationsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetSpecializationsQuery, GetSpecializationsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetSpecializationsQuery, GetSpecializationsQueryVariables>(GetSpecializationsDocument, options);
+        }
+export function useGetSpecializationsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetSpecializationsQuery, GetSpecializationsQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetSpecializationsQuery, GetSpecializationsQueryVariables>(GetSpecializationsDocument, options);
+        }
+export type GetSpecializationsQueryHookResult = ReturnType<typeof useGetSpecializationsQuery>;
+export type GetSpecializationsLazyQueryHookResult = ReturnType<typeof useGetSpecializationsLazyQuery>;
+export type GetSpecializationsSuspenseQueryHookResult = ReturnType<typeof useGetSpecializationsSuspenseQuery>;
+export type GetSpecializationsQueryResult = Apollo.QueryResult<GetSpecializationsQuery, GetSpecializationsQueryVariables>;

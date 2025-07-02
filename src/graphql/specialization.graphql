@@ -1,0 +1,8 @@
+query GetSpecializations {
+  getSpecializations {
+    id
+    categoryName
+    subscription
+    pricePerHour
+  }
+}

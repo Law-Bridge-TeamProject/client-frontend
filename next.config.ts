@@ -7,6 +7,7 @@ const nextConfig: NextConfig = {
     R2_BUCKET_NAME: process.env.R2_BUCKET_NAME,
     R2_ENDPOINT: process.env.R2_ENDPOINT,
     R2_PUBLIC_DOMAIN: process.env.R2_PUBLIC_DOMAIN,
+    BACKEND_URL: process.env.BACKEND_URL,
   },
 };
 
