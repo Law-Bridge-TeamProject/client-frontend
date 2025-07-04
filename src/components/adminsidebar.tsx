@@ -1,13 +1,11 @@
+import React from "react";
 import {
   LayoutDashboard,
   Users,
-  ShoppingCart,
   BarChart3,
   Settings,
   FileText,
   Bell,
-  CreditCard,
-  ChevronDown,
   LogOut
 } from "lucide-react";
 import {
@@ -20,49 +18,50 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { link } from "fs";
 import { PendingUsersTable } from "@/components/PendingUsersTable";
+
+type AdminSidebarProps = {
+  activeSection: string;
+  onSectionChange: (section: string) => void;
+};
 
 const menuItems = [
   {
     title: "Хянах самбар",
-    url: "#",
+    section: "dashboard",
     icon: LayoutDashboard,
-    isActive: true,
   },
   {
     title: "Хэрэглэгчид",
-    url: "#",
+    section: "users",
     icon: Users,
-    link: "@/components/PendingUsersTable",
   },
   {
     title: "Шинжилгээ",
-    url: "#",
+    section: "analysis",
     icon: BarChart3,
   },
   {
     title: "Тайлан",
-    url: "#",
+    section: "report",
     icon: FileText,
   },
   {
     title: "Мэдэгдлүүд",
-    url: "#",
+    section: "notifications",
     icon: Bell,
   },
   {
     title: "Тохиргоо",
-    url: "#",
+    section: "settings",
     icon: Settings,
   },
 ];
 
-export function AdminSidebar() {
+export function AdminSidebar({ activeSection, onSectionChange }: AdminSidebarProps) {
   return (
     <Sidebar className="border-r bg-white">
       <div className="p-6 border-b">
@@ -86,13 +85,13 @@ export function AdminSidebar() {
                   <SidebarMenuButton
                     asChild
                     className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors hover:bg-gray-100 ${
-                      item.isActive ? 'bg-blue-50 text-blue-700 border-r-2 border-blue-600' : 'text-gray-700'
+                      activeSection === item.section ? 'bg-blue-50 text-blue-700 border-r-2 border-blue-600' : 'text-gray-700'
                     }`}
                   >
-                    <a href={item.url}>
+                    <button type="button" onClick={() => onSectionChange(item.section)}>
                       <item.icon className="w-5 h-5" />
                       <span className="font-medium">{item.title}</span>
-                    </a>
+                    </button>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}

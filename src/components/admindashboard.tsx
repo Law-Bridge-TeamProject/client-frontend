@@ -10,7 +10,9 @@ export function AdminDashboard() {
   return (
     <SidebarProvider>
       <div className="min-h-screen flex w-full bg-gray-50/40">
-        <AdminSidebar />
+        <AdminSidebar activeSection={""} onSectionChange={function (section: string): void {
+          throw new Error("Function not implemented.");
+        } } />
         <main className="flex-1 p-6 space-y-6">
           <DashboardHeader />
           <StatsCards />

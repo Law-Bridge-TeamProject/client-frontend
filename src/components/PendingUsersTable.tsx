@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Check, X, Eye, Mail, Calendar, MapPin, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -26,8 +25,9 @@ const mockUsers: User[] = [
     department: "Marketing",
     registrationDate: "2024-01-15",
     location: "New York, NY",
-    avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b789?w=150&h=150&fit=crop&crop=face",
-    reason: "Joining the marketing team to lead digital campaigns"
+    avatar:
+      "https://images.unsplash.com/photo-1494790108755-2616b612b789?w=150&h=150&fit=crop&crop=face",
+    reason: "Joining the marketing team to lead digital campaigns",
   },
   {
     id: "2",
@@ -37,8 +37,9 @@ const mockUsers: User[] = [
     department: "Engineering",
     registrationDate: "2024-01-14",
     location: "San Francisco, CA",
-    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face",
-    reason: "Full-stack developer with React and Node.js experience"
+    avatar:
+      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face",
+    reason: "Full-stack developer with React and Node.js experience",
   },
   {
     id: "3",
@@ -48,8 +49,10 @@ const mockUsers: User[] = [
     department: "Design",
     registrationDate: "2024-01-13",
     location: "Austin, TX",
-    avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face",
-    reason: "Experienced designer specializing in user research and prototyping"
+    avatar:
+      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face",
+    reason:
+      "Experienced designer specializing in user research and prototyping",
   },
   {
     id: "4",
@@ -59,8 +62,10 @@ const mockUsers: User[] = [
     department: "Analytics",
     registrationDate: "2024-01-12",
     location: "Seattle, WA",
-    avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face",
-    reason: "Data scientist with expertise in machine learning and visualization"
+    avatar:
+      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face",
+    reason:
+      "Data scientist with expertise in machine learning and visualization",
   },
 ];
 
@@ -70,8 +75,8 @@ export function PendingUsersTable() {
   const { toast } = useToast();
 
   const handleApprove = (userId: string) => {
-    const user = users.find(u => u.id === userId);
-    setUsers(users.filter(u => u.id !== userId));
+    const user = users.find((u) => u.id === userId);
+    setUsers(users.filter((u) => u.id !== userId));
     toast({
       title: "User Approved",
       description: `${user?.name} has been approved and can now access the system.`,
@@ -79,12 +84,11 @@ export function PendingUsersTable() {
   };
 
   const handleReject = (userId: string) => {
-    const user = users.find(u => u.id === userId);
-    setUsers(users.filter(u => u.id !== userId));
+    const user = users.find((u) => u.id === userId);
+    setUsers(users.filter((u) => u.id !== userId));
     toast({
       title: "User Rejected",
       description: `${user?.name}'s application has been rejected.`,
-      variant: "destructive",
     });
   };
 
@@ -96,7 +100,10 @@ export function PendingUsersTable() {
             <h2 className="text-xl font-semibold text-gray-900">
               Pending Approvals
             </h2>
-            <Badge variant="secondary" className="bg-yellow-100 text-yellow-800">
+            <Badge
+              variant="secondary"
+              className="bg-yellow-100 text-yellow-800"
+            >
               {users.length} pending
             </Badge>
           </div>
@@ -125,7 +132,10 @@ export function PendingUsersTable() {
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
               {users.map((user) => (
-                <tr key={user.id} className="hover:bg-gray-50 transition-colors">
+                <tr
+                  key={user.id}
+                  className="hover:bg-gray-50 transition-colors"
+                >
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="flex items-center">
                       <img
@@ -148,7 +158,9 @@ export function PendingUsersTable() {
                     <div className="text-sm font-medium text-gray-900">
                       {user.role}
                     </div>
-                    <div className="text-sm text-gray-500">{user.department}</div>
+                    <div className="text-sm text-gray-500">
+                      {user.department}
+                    </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="text-sm text-gray-900 flex items-center">
@@ -254,20 +266,26 @@ export function PendingUsersTable() {
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     Department
                   </label>
-                  <p className="text-sm text-gray-900">{selectedUser.department}</p>
+                  <p className="text-sm text-gray-900">
+                    {selectedUser.department}
+                  </p>
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     Location
                   </label>
-                  <p className="text-sm text-gray-900">{selectedUser.location}</p>
+                  <p className="text-sm text-gray-900">
+                    {selectedUser.location}
+                  </p>
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     Registration Date
                   </label>
                   <p className="text-sm text-gray-900">
-                    {new Date(selectedUser.registrationDate).toLocaleDateString()}
+                    {new Date(
+                      selectedUser.registrationDate
+                    ).toLocaleDateString()}
                   </p>
                 </div>
               </div>
