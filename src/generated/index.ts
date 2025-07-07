@@ -121,26 +121,19 @@ export type CreateLawyerInput = {
   profilePicture: Scalars['String']['input'];
   rating?: InputMaybe<Scalars['Int']['input']>;
   specialization: Array<Scalars['ID']['input']>;
-  university: Scalars['String']['input'];
+  university?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type CreateLawyerRequestInput = {
-  bio: Scalars['String']['input'];
-  documents?: InputMaybe<Scalars['String']['input']>;
-  email: Scalars['String']['input'];
-  firstName: Scalars['String']['input'];
-  lastName: Scalars['String']['input'];
-  licenseNumber: Scalars['String']['input'];
-  profilePicture: Scalars['String']['input'];
-  specializations: Array<CreateSpecializationInput>;
-  university: Scalars['String']['input'];
+export type CreateNotificationInput = {
+  content: Scalars['String']['input'];
+  recipientId: Scalars['ID']['input'];
+  type: NotificationType;
 };
 
 export type CreatePostInput = {
-  content: MediaInput;
-  specialization: Array<Scalars['String']['input']>;
+  content: PostContentInput;
+  specialization: Array<Scalars['ID']['input']>;
   title: Scalars['String']['input'];
-  type: Media;
 };
 
 export type CreateReviewInput = {
@@ -189,52 +182,36 @@ export enum DocumentMediaType {
 
 export type Lawyer = {
   __typename?: 'Lawyer';
+  _id: Scalars['ID']['output'];
   achievements: Array<Achievement>;
   bio?: Maybe<Scalars['String']['output']>;
+  clerkUserId?: Maybe<Scalars['String']['output']>;
+  clientId?: Maybe<Scalars['String']['output']>;
   createdAt: Scalars['Date']['output'];
   document?: Maybe<Scalars['String']['output']>;
   email: Scalars['String']['output'];
   firstName: Scalars['String']['output'];
-  id: Scalars['ID']['output'];
   lastName: Scalars['String']['output'];
   lawyerId: Scalars['ID']['output'];
   licenseNumber: Scalars['String']['output'];
   profilePicture: Scalars['String']['output'];
   rating?: Maybe<Scalars['Int']['output']>;
   specialization: Array<Specialization>;
-  university: Scalars['String']['output'];
+  status?: Maybe<LawyerRequestStatus>;
+  university?: Maybe<Scalars['String']['output']>;
   updatedAt?: Maybe<Scalars['Date']['output']>;
 };
 
-export type LawyerRequest = {
-  __typename?: 'LawyerRequest';
-  bio: Scalars['String']['output'];
-  createdAt: Scalars['Date']['output'];
-  documents?: Maybe<Scalars['String']['output']>;
-  email: Scalars['String']['output'];
-  firstName: Scalars['String']['output'];
-  id: Scalars['ID']['output'];
-  lastName: Scalars['String']['output'];
-  lawyerId: Scalars['ID']['output'];
-  licenseNumber: Scalars['String']['output'];
-  profilePicture: Scalars['String']['output'];
-  specializations: Array<Specialization>;
-  status: LawyerRequestStatus;
-  university: Scalars['String']['output'];
-  updatedAt: Scalars['Date']['output'];
-};
-
 export enum LawyerRequestStatus {
-  Approved = 'approved',
-  Pending = 'pending',
-  Rejected = 'rejected'
+  Pending = 'PENDING',
+  Rejected = 'REJECTED',
+  Verified = 'VERIFIED'
 }
 
-export enum Media {
-  Image = 'IMAGE',
-  Text = 'TEXT',
-  Video = 'VIDEO'
-}
+export type ManageLawyerRequestInput = {
+  lawyerId: Scalars['ID']['input'];
+  status: LawyerRequestStatus;
+};
 
 export type MediaInput = {
   audio?: InputMaybe<Scalars['String']['input']>;
@@ -245,6 +222,7 @@ export type MediaInput = {
 
 export enum MediaType {
   Audio = 'AUDIO',
+  File = 'FILE',
   Image = 'IMAGE',
   Text = 'TEXT',
   Video = 'VIDEO'
@@ -260,7 +238,6 @@ export type Message = {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  approveLawyerRequest: Scalars['Boolean']['output'];
   createAchievement: Achievement;
   createAppointment?: Maybe<Appointment>;
   createChatRoom?: Maybe<Scalars['String']['output']>;
@@ -268,7 +245,6 @@ export type Mutation = {
   createComment: Comment;
   createDocument: Document;
   createLawyer: Lawyer;
-  createLawyerRequest: LawyerRequest;
   createMessage?: Maybe<Message>;
   createNotification: Notification;
   createPost: Post;
@@ -280,8 +256,9 @@ export type Mutation = {
   deletePost: Scalars['Boolean']['output'];
   deleteReview: Scalars['Boolean']['output'];
   deleteSpecialization: Scalars['Boolean']['output'];
+  manageLawyerRequest: Lawyer;
+  markAllNotificationsAsRead: Scalars['Boolean']['output'];
   markNotificationAsRead: Notification;
-  rejectLawyerRequest: Scalars['Boolean']['output'];
   reviewDocument: Document;
   setAvailability?: Maybe<Availability>;
   updateAchievement: Achievement;
@@ -291,11 +268,6 @@ export type Mutation = {
   updatePost: Post;
   updateReview: Review;
   updateSpecialization: Specialization;
-};
-
-
-export type MutationApproveLawyerRequestArgs = {
-  lawyerId: Scalars['ID']['input'];
 };
 
 
@@ -334,11 +306,6 @@ export type MutationCreateLawyerArgs = {
 };
 
 
-export type MutationCreateLawyerRequestArgs = {
-  input: CreateLawyerRequestInput;
-};
-
-
 export type MutationCreateMessageArgs = {
   chatRoomId: Scalars['ID']['input'];
   content?: InputMaybe<Scalars['String']['input']>;
@@ -348,10 +315,7 @@ export type MutationCreateMessageArgs = {
 
 
 export type MutationCreateNotificationArgs = {
-  clientId?: InputMaybe<Scalars['ID']['input']>;
-  content: Scalars['String']['input'];
-  lawyerId: Scalars['ID']['input'];
-  type: NotificationType;
+  input: CreateNotificationInput;
 };
 
 
@@ -400,13 +364,13 @@ export type MutationDeleteSpecializationArgs = {
 };
 
 
-export type MutationMarkNotificationAsReadArgs = {
-  notificationId: Scalars['ID']['input'];
+export type MutationManageLawyerRequestArgs = {
+  input: ManageLawyerRequestInput;
 };
 
 
-export type MutationRejectLawyerRequestArgs = {
-  lawyerId: Scalars['ID']['input'];
+export type MutationMarkNotificationAsReadArgs = {
+  notificationId: Scalars['ID']['input'];
 };
 
 
@@ -463,12 +427,11 @@ export type MutationUpdateSpecializationArgs = {
 
 export type Notification = {
   __typename?: 'Notification';
-  clientId?: Maybe<Scalars['String']['output']>;
   content: Scalars['String']['output'];
   createdAt: Scalars['Date']['output'];
   id: Scalars['ID']['output'];
-  lawyerId: Scalars['String']['output'];
   read: Scalars['Boolean']['output'];
+  recipientId: Scalars['ID']['output'];
   type: NotificationType;
 };
 
@@ -485,13 +448,29 @@ export enum NotificationType {
 export type Post = {
   __typename?: 'Post';
   _id: Scalars['ID']['output'];
-  content: Media;
+  content: PostContent;
   createdAt: Scalars['Date']['output'];
-  lawyerId: Scalars['String']['output'];
-  specialization: Array<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  lawyerId: Scalars['ID']['output'];
+  specialization: Array<Specialization>;
   title: Scalars['String']['output'];
-  type: Media;
-  updatedAt: Scalars['Date']['output'];
+  type: MediaType;
+  updatedAt?: Maybe<Scalars['Date']['output']>;
+};
+
+export type PostContent = {
+  __typename?: 'PostContent';
+  audio?: Maybe<Scalars['String']['output']>;
+  image?: Maybe<Scalars['String']['output']>;
+  text?: Maybe<Scalars['String']['output']>;
+  video?: Maybe<Scalars['String']['output']>;
+};
+
+export type PostContentInput = {
+  audio?: InputMaybe<Scalars['String']['input']>;
+  image?: InputMaybe<Scalars['String']['input']>;
+  text?: InputMaybe<Scalars['String']['input']>;
+  video?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type Query = {
@@ -508,15 +487,11 @@ export type Query = {
   getDocumentsByStatus: Array<Document>;
   getDocumentsByUser: Array<Document>;
   getLawyerById?: Maybe<Lawyer>;
-  getLawyerRequestByLawyerId?: Maybe<LawyerRequest>;
   getLawyers: Array<Lawyer>;
   getLawyersByAchievement: Array<Lawyer>;
   getLawyersBySpecialization: Array<Lawyer>;
+  getLawyersByStatus: Array<Lawyer>;
   getMessages: Array<Message>;
-  getNotifications: Array<Notification>;
-  getNotificationsClient: Array<Notification>;
-  getNotificationsLawyer: Array<Notification>;
-  getPendingLawyerRequests: Array<LawyerRequest>;
   getPostById?: Maybe<Post>;
   getPostsByLawyer: Array<Post>;
   getPostsBySpecializationId: Array<Post>;
@@ -525,6 +500,7 @@ export type Query = {
   getSpecializationByCategory?: Maybe<Specialization>;
   getSpecializations: Array<Specialization>;
   getSpecializationsByLawyer: Array<Specialization>;
+  myNotifications: Array<Notification>;
   searchPosts: Array<Post>;
 };
 
@@ -585,11 +561,6 @@ export type QueryGetLawyerByIdArgs = {
 };
 
 
-export type QueryGetLawyerRequestByLawyerIdArgs = {
-  lawyerId?: InputMaybe<Scalars['ID']['input']>;
-};
-
-
 export type QueryGetLawyersByAchievementArgs = {
   achievementId: Scalars['ID']['input'];
 };
@@ -600,23 +571,13 @@ export type QueryGetLawyersBySpecializationArgs = {
 };
 
 
+export type QueryGetLawyersByStatusArgs = {
+  status: LawyerRequestStatus;
+};
+
+
 export type QueryGetMessagesArgs = {
   chatRoomId: Scalars['ID']['input'];
-};
-
-
-export type QueryGetNotificationsArgs = {
-  userId: Scalars['ID']['input'];
-};
-
-
-export type QueryGetNotificationsClientArgs = {
-  clientId: Scalars['ID']['input'];
-};
-
-
-export type QueryGetNotificationsLawyerArgs = {
-  lawyerId: Scalars['ID']['input'];
 };
 
 
@@ -750,10 +711,9 @@ export type UpdateLawyerInput = {
 };
 
 export type UpdatePostInput = {
-  content?: InputMaybe<MediaInput>;
-  specialization?: InputMaybe<Array<Scalars['String']['input']>>;
+  content?: InputMaybe<PostContentInput>;
+  specialization?: InputMaybe<Array<Scalars['ID']['input']>>;
   title?: InputMaybe<Scalars['String']['input']>;
-  type?: InputMaybe<Media>;
 };
 
 export type UpdateReviewInput = {
@@ -772,6 +732,11 @@ export type CreateAppointmentMutationVariables = Exact<{
 
 
 export type CreateAppointmentMutation = { __typename?: 'Mutation', createAppointment?: { __typename?: 'Appointment', lawyerId: string, schedule: string, status: AppointmentStatus, chatRoomId?: string | null } | null };
+
+export type GetSpecializationsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetSpecializationsQuery = { __typename?: 'Query', getSpecializations: Array<{ __typename?: 'Specialization', id: string, categoryName: SpecializationCategory, subscription: boolean, pricePerHour?: number | null }> };
 
 
 export const CreateAppointmentDocument = gql`
@@ -810,3 +775,45 @@ export function useCreateAppointmentMutation(baseOptions?: Apollo.MutationHookOp
 export type CreateAppointmentMutationHookResult = ReturnType<typeof useCreateAppointmentMutation>;
 export type CreateAppointmentMutationResult = Apollo.MutationResult<CreateAppointmentMutation>;
 export type CreateAppointmentMutationOptions = Apollo.BaseMutationOptions<CreateAppointmentMutation, CreateAppointmentMutationVariables>;
+export const GetSpecializationsDocument = gql`
+    query GetSpecializations {
+  getSpecializations {
+    id
+    categoryName
+    subscription
+    pricePerHour
+  }
+}
+    `;
+
+/**
+ * __useGetSpecializationsQuery__
+ *
+ * To run a query within a React component, call `useGetSpecializationsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetSpecializationsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetSpecializationsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetSpecializationsQuery(baseOptions?: Apollo.QueryHookOptions<GetSpecializationsQuery, GetSpecializationsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetSpecializationsQuery, GetSpecializationsQueryVariables>(GetSpecializationsDocument, options);
+      }
+export function useGetSpecializationsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetSpecializationsQuery, GetSpecializationsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetSpecializationsQuery, GetSpecializationsQueryVariables>(GetSpecializationsDocument, options);
+        }
+export function useGetSpecializationsSuspenseQuery(baseOptions?: Apollo.SkipToken | Apollo.SuspenseQueryHookOptions<GetSpecializationsQuery, GetSpecializationsQueryVariables>) {
+          const options = baseOptions === Apollo.skipToken ? baseOptions : {...defaultOptions, ...baseOptions}
+          return Apollo.useSuspenseQuery<GetSpecializationsQuery, GetSpecializationsQueryVariables>(GetSpecializationsDocument, options);
+        }
+export type GetSpecializationsQueryHookResult = ReturnType<typeof useGetSpecializationsQuery>;
+export type GetSpecializationsLazyQueryHookResult = ReturnType<typeof useGetSpecializationsLazyQuery>;
+export type GetSpecializationsSuspenseQueryHookResult = ReturnType<typeof useGetSpecializationsSuspenseQuery>;
+export type GetSpecializationsQueryResult = Apollo.QueryResult<GetSpecializationsQuery, GetSpecializationsQueryVariables>;

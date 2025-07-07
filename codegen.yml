@@ -1,9 +1,9 @@
 overwrite: true
 schema:
-  - 'http://localhost:4000/api/graphql'
+  - "https://lawbridge-server.onrender.com/graphql"
 
 documents:
-  - './src/**/*.graphql'
+  - "./src/graphql/*.graphql"
 
 generates:
   ./src/generated/index.ts:
@@ -11,6 +11,6 @@ generates:
       reactApolloVersion: 3
       withHooks: true
     plugins:
-      - 'typescript'
-      - 'typescript-operations'
-      - 'typescript-react-apollo'
+      - "typescript"
+      - "typescript-operations"
+      - "typescript-react-apollo"
