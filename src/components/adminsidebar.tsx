@@ -22,6 +22,7 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { PendingUsersTable } from "@/components/PendingUsersTable";
+import { link } from "fs";
 
 type AdminSidebarProps = {
   activeSection: string;
@@ -40,8 +41,8 @@ const menuItems = [
     icon: Users,
   },
   {
-    title: "Шинжилгээ",
-    section: "analysis",
+    title: "Хуульчийн баталгаажуулалт",
+    section: "lawyeraprroval",
     icon: BarChart3,
   },
   {
