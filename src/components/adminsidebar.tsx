@@ -2,7 +2,7 @@ import React from "react";
 import {
   LayoutDashboard,
   Users,
-  BarChart3,
+  Gavel,
   Settings,
   FileText,
   Bell,
@@ -43,7 +43,7 @@ const menuItems = [
   {
     title: "Хуульчийн баталгаажуулалт",
     section: "lawyeraprroval",
-    icon: BarChart3,
+    icon: Gavel,
   },
   {
     title: "Тайлан",
